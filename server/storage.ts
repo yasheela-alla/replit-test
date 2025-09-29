@@ -1,23 +1,40 @@
-import { type User, type InsertUser } from "@shared/schema";
+import { type User, type InsertUser, type Task, type InsertTask, type TaskComment, type InsertTaskComment } from "@shared/schema";
 import { randomUUID } from "crypto";
 
 // modify the interface with any CRUD methods
 // you might need
 
 export interface IStorage {
+  // User methods
   getUser(id: string): Promise<User | undefined>;
   getUserByEmail(email: string): Promise<User | undefined>;
   createUser(user: InsertUser): Promise<User>;
   authenticateUser(email: string, password: string): Promise<User | null>;
+  
+  // Task methods
+  getTasks(filters?: { status?: string; assigneeId?: string; createdById?: string }): Promise<Task[]>;
+  getTask(id: string): Promise<Task | undefined>;
+  createTask(task: InsertTask & { createdById: string }): Promise<Task>;
+  updateTask(id: string, updates: Partial<Task>): Promise<Task | undefined>;
+  deleteTask(id: string): Promise<boolean>;
+  
+  // Task comment methods
+  getTaskComments(taskId: string): Promise<TaskComment[]>;
+  addTaskComment(comment: InsertTaskComment & { userId: string }): Promise<TaskComment>;
 }
 
 export class MemStorage implements IStorage {
   private users: Map<string, User>;
+  private tasks: Map<string, Task>;
+  private taskComments: Map<string, TaskComment>;
 
   constructor() {
     this.users = new Map();
-    // Initialize with demo users for the three roles
+    this.tasks = new Map();
+    this.taskComments = new Map();
+    // Initialize with demo data
     this.seedUsers();
+    this.seedTasks();
   }
 
   private seedUsers() {
@@ -50,6 +67,76 @@ export class MemStorage implements IStorage {
     });
   }
 
+  private seedTasks() {
+    const now = new Date().toISOString();
+    const demoTasks: Task[] = [
+      {
+        id: "task-1",
+        title: "New store awareness campaign",
+        requirement: "Create promotional video for Bhimavaram branch opening", 
+        contentType: "video",
+        campaign: "Store Opening",
+        dueDate: "2025-10-15",
+        priority: "high",
+        status: "in_review",
+        assigneeId: "1",
+        createdById: "2",
+        branchSpecific: "Bhimavaram",
+        format: "1350 x 1080 PX",
+        eventBased: "Store Opening",
+        reference: null,
+        thumbnailUrl: "/api/placeholder/400/300",
+        tags: ["promotional", "video", "store-opening"],
+        createdAt: now,
+        updatedAt: now
+      },
+      {
+        id: "task-2",
+        title: "Festival collection showcase",
+        requirement: "Design carousel for Diwali jewelry collection",
+        contentType: "carousel",
+        campaign: "Diwali 2025",
+        dueDate: "2025-10-20",
+        priority: "medium",
+        status: "draft",
+        assigneeId: "2",
+        createdById: "3",
+        branchSpecific: "All Branches",
+        format: "Square 1080x1080",
+        eventBased: "Diwali",
+        reference: null,
+        thumbnailUrl: "/api/placeholder/400/300",
+        tags: ["festival", "carousel", "jewelry"],
+        createdAt: now,
+        updatedAt: now
+      },
+      {
+        id: "task-3",
+        title: "Wedding collection promo",
+        requirement: "Create image assets for wedding jewelry campaign",
+        contentType: "image",
+        campaign: "Wedding Season",
+        dueDate: "2025-10-10",
+        priority: "urgent",
+        status: "approved",
+        assigneeId: "2",
+        createdById: "1",
+        branchSpecific: "Hyderabad",
+        format: "Portrait 1080x1350",
+        eventBased: "Wedding Season",
+        reference: null,
+        thumbnailUrl: "/api/placeholder/400/300",
+        tags: ["wedding", "image", "jewelry"],
+        createdAt: now,
+        updatedAt: now
+      }
+    ];
+
+    demoTasks.forEach(task => {
+      this.tasks.set(task.id, task);
+    });
+  }
+
   async getUser(id: string): Promise<User | undefined> {
     return this.users.get(id);
   }
@@ -73,6 +160,77 @@ export class MemStorage implements IStorage {
     const user: User = { ...insertUser, id };
     this.users.set(id, user);
     return user;
+  }
+
+  // Task methods implementation
+  async getTasks(filters?: { status?: string; assigneeId?: string; createdById?: string }): Promise<Task[]> {
+    let tasks = Array.from(this.tasks.values());
+    
+    if (filters?.status) {
+      tasks = tasks.filter(task => task.status === filters.status);
+    }
+    if (filters?.assigneeId) {
+      tasks = tasks.filter(task => task.assigneeId === filters.assigneeId);
+    }
+    if (filters?.createdById) {
+      tasks = tasks.filter(task => task.createdById === filters.createdById);
+    }
+    
+    return tasks.sort((a, b) => new Date(b.createdAt!).getTime() - new Date(a.createdAt!).getTime());
+  }
+
+  async getTask(id: string): Promise<Task | undefined> {
+    return this.tasks.get(id);
+  }
+
+  async createTask(taskData: InsertTask & { createdById: string }): Promise<Task> {
+    const id = randomUUID();
+    const now = new Date().toISOString();
+    const task: Task = {
+      ...taskData,
+      id,
+      status: 'draft',
+      createdAt: now,
+      updatedAt: now
+    };
+    this.tasks.set(id, task);
+    return task;
+  }
+
+  async updateTask(id: string, updates: Partial<Task>): Promise<Task | undefined> {
+    const task = this.tasks.get(id);
+    if (!task) return undefined;
+    
+    const updatedTask = {
+      ...task,
+      ...updates,
+      updatedAt: new Date().toISOString()
+    };
+    this.tasks.set(id, updatedTask);
+    return updatedTask;
+  }
+
+  async deleteTask(id: string): Promise<boolean> {
+    return this.tasks.delete(id);
+  }
+
+  // Task comment methods
+  async getTaskComments(taskId: string): Promise<TaskComment[]> {
+    return Array.from(this.taskComments.values())
+      .filter(comment => comment.taskId === taskId)
+      .sort((a, b) => new Date(a.createdAt!).getTime() - new Date(b.createdAt!).getTime());
+  }
+
+  async addTaskComment(commentData: InsertTaskComment & { userId: string }): Promise<TaskComment> {
+    const id = randomUUID();
+    const now = new Date().toISOString();
+    const comment: TaskComment = {
+      ...commentData,
+      id,
+      createdAt: now
+    };
+    this.taskComments.set(id, comment);
+    return comment;
   }
 }
 

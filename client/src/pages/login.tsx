@@ -2,7 +2,7 @@ import { SignInPage } from '@/components/ui/sign-in';
 import heroImage from '@assets/stock_images/abstract_purple_grad_d1c38c4d.jpg';
 
 interface LoginPageProps {
-  onLoginSuccess: (user: { name: string; email: string; role: string; }) => void;
+  onLoginSuccess: (user: { name: string; email: string; role: 'manager' | 'creative_team' | 'digital_marketer'; }) => void;
 }
 
 export default function LoginPage({ onLoginSuccess }: LoginPageProps) {

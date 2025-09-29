@@ -1,4 +1,4 @@
-import { Dashboard } from '@/components/ui/dashboard';
+import TasksPage from './tasks';
 
 interface DashboardPageProps {
   user: {
@@ -11,7 +11,7 @@ interface DashboardPageProps {
 
 export default function DashboardPage({ user, onLogout }: DashboardPageProps) {
   return (
-    <Dashboard
+    <TasksPage
       user={user}
       onLogout={onLogout}
     />
