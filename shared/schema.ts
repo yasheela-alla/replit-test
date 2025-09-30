@@ -80,3 +80,39 @@ export type InsertTaskComment = z.infer<typeof insertTaskCommentSchema>;
 
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type User = typeof users.$inferSelect;
+
+// Campaign Schema for social media management
+export const campaigns = pgTable("campaigns", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  name: text("name").notNull(),
+  platform: text("platform").notNull().$type<'instagram' | 'facebook' | 'youtube' | 'twitter' | 'linkedin' | 'tiktok'>(),
+  startDate: text("start_date").notNull(),
+  endDate: text("end_date"),
+  budget: text("budget"),
+  spent: text("spent"),
+  status: text("status").notNull().$type<'active' | 'scheduled' | 'completed' | 'paused'>().default('active'),
+  reach: text("reach"),
+  impressions: text("impressions"),
+  engagement: text("engagement"),
+  conversions: text("conversions"),
+  createdById: text("created_by_id").notNull().references(() => users.id),
+  createdAt: text("created_at").default(sql`now()`),
+  updatedAt: text("updated_at").default(sql`now()`),
+});
+
+export const insertCampaignSchema = createInsertSchema(campaigns).pick({
+  name: true,
+  platform: true,
+  startDate: true,
+  endDate: true,
+  budget: true,
+  spent: true,
+  status: true,
+  reach: true,
+  impressions: true,
+  engagement: true,
+  conversions: true,
+});
+
+export type InsertCampaign = z.infer<typeof insertCampaignSchema>;
+export type Campaign = typeof campaigns.$inferSelect;

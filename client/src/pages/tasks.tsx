@@ -321,9 +321,6 @@ export default function TasksPage({ user, onLogout }: TasksPageProps) {
                   Event Based
                 </th>
                 <th className="text-left py-3 px-4 text-sm font-medium text-muted-foreground">
-                  Priority
-                </th>
-                <th className="text-left py-3 px-4 text-sm font-medium text-muted-foreground">
                   Due Date
                 </th>
                 <th className="text-left py-3 px-4 text-sm font-medium text-muted-foreground">
@@ -376,11 +373,6 @@ export default function TasksPage({ user, onLogout }: TasksPageProps) {
                       className="text-xs"
                     >
                       {task.eventBased}
-                    </Badge>
-                  </td>
-                  <td className="py-3 px-4">
-                    <Badge className={priorityColors[task.priority]}>
-                      {task.priority}
                     </Badge>
                   </td>
                   <td className="py-3 px-4">

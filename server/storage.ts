@@ -1,4 +1,4 @@
-import { type User, type InsertUser, type Task, type InsertTask, type TaskComment, type InsertTaskComment } from "@shared/schema";
+import { type User, type InsertUser, type Task, type InsertTask, type TaskComment, type InsertTaskComment, type Campaign, type InsertCampaign } from "@shared/schema";
 import { randomUUID } from "crypto";
 
 // modify the interface with any CRUD methods
@@ -21,20 +21,30 @@ export interface IStorage {
   // Task comment methods
   getTaskComments(taskId: string): Promise<TaskComment[]>;
   addTaskComment(comment: InsertTaskComment & { userId: string }): Promise<TaskComment>;
+  
+  // Campaign methods
+  getCampaigns(filters?: { status?: string; platform?: string }): Promise<Campaign[]>;
+  getCampaign(id: string): Promise<Campaign | undefined>;
+  createCampaign(campaign: InsertCampaign & { createdById: string }): Promise<Campaign>;
+  updateCampaign(id: string, updates: Partial<Campaign>): Promise<Campaign | undefined>;
+  deleteCampaign(id: string): Promise<boolean>;
 }
 
 export class MemStorage implements IStorage {
   private users: Map<string, User>;
   private tasks: Map<string, Task>;
   private taskComments: Map<string, TaskComment>;
+  private campaigns: Map<string, Campaign>;
 
   constructor() {
     this.users = new Map();
     this.tasks = new Map();
     this.taskComments = new Map();
+    this.campaigns = new Map();
     // Initialize with demo data
     this.seedUsers();
     this.seedTasks();
+    this.seedCampaigns();
   }
 
   private seedUsers() {
@@ -248,6 +258,144 @@ export class MemStorage implements IStorage {
     };
     this.taskComments.set(id, comment);
     return comment;
+  }
+
+  // Campaign seed data
+  private seedCampaigns() {
+    const now = new Date().toISOString();
+    const demoCampaigns: Campaign[] = [
+      {
+        id: "campaign-1",
+        name: "Diwali Collection Launch",
+        platform: "instagram",
+        startDate: "2025-10-01",
+        endDate: "2025-10-31",
+        budget: "50000",
+        spent: "32450",
+        status: "active",
+        reach: "125000",
+        impressions: "342000",
+        engagement: "28500",
+        conversions: "1250",
+        createdById: "1",
+        createdAt: now,
+        updatedAt: now
+      },
+      {
+        id: "campaign-2",
+        name: "Wedding Season Showcase",
+        platform: "facebook",
+        startDate: "2025-09-15",
+        endDate: "2025-12-31",
+        budget: "75000",
+        spent: "45300",
+        status: "active",
+        reach: "210000",
+        impressions: "580000",
+        engagement: "42000",
+        conversions: "2100",
+        createdById: "3",
+        createdAt: now,
+        updatedAt: now
+      },
+      {
+        id: "campaign-3",
+        name: "Store Opening Promotion",
+        platform: "youtube",
+        startDate: "2025-10-10",
+        endDate: "2025-10-20",
+        budget: "30000",
+        spent: "18500",
+        status: "active",
+        reach: "85000",
+        impressions: "195000",
+        engagement: "12500",
+        conversions: "650",
+        createdById: "2",
+        createdAt: now,
+        updatedAt: now
+      },
+      {
+        id: "campaign-4",
+        name: "Festive Collection Teaser",
+        platform: "instagram",
+        startDate: "2025-11-01",
+        endDate: null,
+        budget: "40000",
+        spent: "0",
+        status: "scheduled",
+        reach: "0",
+        impressions: "0",
+        engagement: "0",
+        conversions: "0",
+        createdById: "1",
+        createdAt: now,
+        updatedAt: now
+      }
+    ];
+
+    demoCampaigns.forEach(campaign => {
+      this.campaigns.set(campaign.id, campaign);
+    });
+  }
+
+  // Campaign methods implementation
+  async getCampaigns(filters?: { status?: string; platform?: string }): Promise<Campaign[]> {
+    let campaigns = Array.from(this.campaigns.values());
+    
+    if (filters?.status) {
+      campaigns = campaigns.filter(campaign => campaign.status === filters.status);
+    }
+    if (filters?.platform) {
+      campaigns = campaigns.filter(campaign => campaign.platform === filters.platform);
+    }
+    
+    return campaigns.sort((a, b) => new Date(b.createdAt!).getTime() - new Date(a.createdAt!).getTime());
+  }
+
+  async getCampaign(id: string): Promise<Campaign | undefined> {
+    return this.campaigns.get(id);
+  }
+
+  async createCampaign(campaignData: InsertCampaign & { createdById: string }): Promise<Campaign> {
+    const id = randomUUID();
+    const now = new Date().toISOString();
+    const campaign: Campaign = {
+      name: campaignData.name,
+      platform: campaignData.platform as 'instagram' | 'facebook' | 'youtube' | 'twitter' | 'linkedin' | 'tiktok',
+      startDate: campaignData.startDate,
+      endDate: campaignData.endDate || null,
+      budget: campaignData.budget || null,
+      spent: campaignData.spent || null,
+      status: (campaignData.status || 'active') as 'active' | 'scheduled' | 'completed' | 'paused',
+      reach: campaignData.reach || null,
+      impressions: campaignData.impressions || null,
+      engagement: campaignData.engagement || null,
+      conversions: campaignData.conversions || null,
+      id,
+      createdById: campaignData.createdById,
+      createdAt: now,
+      updatedAt: now
+    };
+    this.campaigns.set(id, campaign);
+    return campaign;
+  }
+
+  async updateCampaign(id: string, updates: Partial<Campaign>): Promise<Campaign | undefined> {
+    const campaign = this.campaigns.get(id);
+    if (!campaign) return undefined;
+    
+    const updatedCampaign = {
+      ...campaign,
+      ...updates,
+      updatedAt: new Date().toISOString()
+    };
+    this.campaigns.set(id, updatedCampaign);
+    return updatedCampaign;
+  }
+
+  async deleteCampaign(id: string): Promise<boolean> {
+    return this.campaigns.delete(id);
   }
 }
 

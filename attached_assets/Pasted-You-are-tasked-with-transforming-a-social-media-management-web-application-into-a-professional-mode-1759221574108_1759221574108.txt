@@ -1,0 +1,105 @@
+You are tasked with transforming a social media management web application into a professional, modern, premium-quality analytics and management platform. Act as if you are the Manager, Creative Team, and Digital Marketing Team combined - think about what would make this platform incredibly easy to use, visually stunning, and functionally powerful.
+CURRENT ISSUES TO FIX:
+
+Dashboard vs Task Manager: Currently has duplicate content. Recreate the dashboard as a true analytical dashboard with metrics, charts, and insights (inspired by shadcn/ui and 21st.dev components).
+Remove from Task Manager Page:
+
+Remove the three-dots menu from the Actions column entirely
+Remove the Priority column
+
+
+Make Filters Fully Functional:
+
+Add comprehensive filtering system (status, platform, date range, content type, team member)
+Make filters work professionally like enterprise management tools
+Add search functionality across all relevant pages
+
+
+Content Planner Page:
+
+Make the calendar fully functional
+Enable content scheduling directly from calendar
+Add drag-and-drop for rescheduling
+Implement filters for calendar view (by platform, status, content type)
+
+
+Add New Page - Campaign Overview:
+
+Create a campaign analytics page with metrics like reach, engagement, ROI
+Include campaign performance charts and graphs
+Show campaign timeline and milestones
+Display budget tracking and spending analytics
+
+
+
+DESIGN REQUIREMENTS:
+
+Fully responsive across all devices (mobile, tablet, desktop, large screens)
+Follow shadcn/ui design patterns and 21st.dev component aesthetics
+Modern, clean, premium aesthetic with subtle animations
+Professional color palette with proper contrast
+Smooth transitions and micro-interactions
+Card-based layouts with proper spacing
+Use of glassmorphism and subtle shadows where appropriate
+
+FUNCTIONALITY REQUIREMENTS:
+Think like a professional team managing social media:
+
+What metrics matter most? (engagement rate, reach, conversions, ROI)
+What actions are performed frequently? (scheduling, editing, analytics review)
+What insights would help decision-making? (trends, best posting times, content performance)
+How can we reduce clicks and improve workflow?
+
+PAGES STRUCTURE:
+
+Dashboard (Analytics-focused):
+
+Key metrics cards (followers, engagement, reach, conversions)
+Performance charts (line, bar, pie charts)
+Recent activity feed
+Top performing content
+Platform comparison
+Quick action buttons
+
+
+Task Manager (Simplified):
+
+Clean table without priority column or three-dots menu
+Inline edit capabilities
+Status badges
+Direct action buttons (edit, delete)
+Advanced filters
+Bulk actions
+
+
+Content Planner:
+
+Fully functional calendar
+Drag-and-drop scheduling
+Multiple view modes (month, week, day)
+Color-coded by platform
+Quick preview on hover
+Filters sidebar
+
+
+Campaign Overview (NEW):
+
+Campaign cards with key metrics
+Performance graphs
+ROI calculator
+Budget vs. actual spending
+Campaign timeline
+Team collaboration section
+
+
+
+TECHNICAL STACK:
+
+React with hooks
+Tailwind CSS for styling
+Lucide React for icons
+Recharts for data visualization
+Ensure NO use of localStorage/sessionStorage (use React state only)
+Make it production-ready and bug-free
+
+IMPORTANT: Make this feel like a premium SaaS product that costs $99/month. Every interaction should feel smooth, every design decision should be intentional, and every feature should serve a real business need. Think Notion, Linear, and Vercel's design quality.
