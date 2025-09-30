@@ -1,10 +1,13 @@
 import { useState, useEffect } from 'react';
-import { Plus, Search, Filter } from 'lucide-react';
+import { Plus, Search, Filter, Bell } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { TaskStats } from '@/components/ui/task-stats';
-import { TaskTable } from '@/components/ui/task-table';
+import { StatsGrid } from '@/components/ui/enhanced-stats';
+import { TaskActions } from '@/components/ui/task-actions';
 import { NewTaskModal } from '@/components/ui/new-task-modal';
+import { Badge } from '@/components/ui/badge';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { useToast } from '@/hooks/use-toast';
 
 interface Task {
   id: string;
@@ -40,84 +43,120 @@ export default function TasksPage({ user, onLogout }: TasksPageProps) {
   const [users, setUsers] = useState<User[]>([]);
   const [isNewTaskModalOpen, setIsNewTaskModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const { toast } = useToast();
 
-  // Mock data - TODO: Replace with actual API calls
   useEffect(() => {
     const mockUsers: User[] = [
-      { id: '1', name: 'Sarah Johnson', email: 'manager@company.com', role: 'manager' },
-      { id: '2', name: 'Alex Chen', email: 'creative@company.com', role: 'creative_team' },
-      { id: '3', name: 'Maria Rodriguez', email: 'marketing@company.com', role: 'digital_marketer' }
+      { id: '1', name: 'Sarah Johnson', email: 'manager@emmadi.com', role: 'manager' },
+      { id: '2', name: 'Alex Chen', email: 'creative@emmadi.com', role: 'creative_team' },
+      { id: '3', name: 'Maria Rodriguez', email: 'dm@emmadi.com', role: 'digital_marketer' },
+      { id: '4', name: 'Pradeep Kumar', email: 'pradeep@emmadi.com', role: 'creative_team' }
     ];
 
     const mockTasks: Task[] = [
       {
         id: 'task-1',
         title: 'New store awareness campaign',
-        requirement: 'New store awareness',
+        requirement: 'Create promotional video for new store opening',
         contentType: 'video',
         priority: 'high',
         status: 'in_review',
         assigneeId: '1',
-        createdById: '2',
+        createdById: '4',
         branchSpecific: 'Bhimavaram',
         format: '1350 x 1080 PX',
-        eventBased: 'NO',
+        eventBased: 'YES',
+        dueDate: '2025-02-15',
         thumbnailUrl: '/placeholder.jpg'
       },
       {
         id: 'task-2',
         title: 'Festival collection showcase',
-        requirement: 'New store awareness',
-        contentType: 'video',
-        priority: 'medium',
+        requirement: 'Design carousel for Diwali collection',
+        contentType: 'carousel',
+        priority: 'high',
         status: 'in_review',
         assigneeId: '1',
         createdById: '2',
-        branchSpecific: 'Bhimavaram',
-        format: '1350 x 1080 PX',
-        eventBased: 'NO',
+        branchSpecific: 'All Branches',
+        format: '1080 x 1080 PX',
+        eventBased: 'YES',
+        dueDate: '2025-02-10',
         thumbnailUrl: '/placeholder.jpg'
       },
       {
         id: 'task-3',
         title: 'Wedding collection promo',
-        requirement: 'New store awareness',
-        contentType: 'video',
+        requirement: 'Social media posts for wedding season',
+        contentType: 'image',
         priority: 'urgent',
         status: 'in_review',
         assigneeId: '1',
         createdById: '2',
-        branchSpecific: 'Bhimavaram',
-        format: '1350 x 1080 PX',
+        branchSpecific: 'Vijayawada',
+        format: '1080 x 1350 PX',
         eventBased: 'NO',
+        dueDate: '2025-02-08',
         thumbnailUrl: '/placeholder.jpg'
       },
       {
         id: 'task-4',
         title: 'Social media campaign',
-        requirement: 'New store awareness',
+        requirement: 'Weekly social media content',
         contentType: 'video',
         priority: 'medium',
-        status: 'in_review',
-        assigneeId: '1',
-        createdById: '2',
-        branchSpecific: 'Bhimavaram',
-        format: '1350 x 1080 PX',
+        status: 'draft',
+        assigneeId: '2',
+        createdById: '3',
+        branchSpecific: 'Online',
+        format: '1080 x 1920 PX',
         eventBased: 'NO',
+        dueDate: '2025-02-20',
         thumbnailUrl: '/placeholder.jpg'
       },
       {
         id: 'task-5',
         title: 'Product showcase',
-        requirement: 'New store awareness',
-        contentType: 'video',
+        requirement: 'Product photography for website',
+        contentType: 'image',
         priority: 'low',
-        status: 'in_review',
-        assigneeId: '1',
-        createdById: '2',
-        branchSpecific: 'Bhimavaram',
-        format: '1350 x 1080 PX',
+        status: 'draft',
+        assigneeId: '2',
+        createdById: '3',
+        branchSpecific: 'All Branches',
+        format: '1200 x 1200 PX',
         eventBased: 'NO',
+        dueDate: '2025-02-25',
+        thumbnailUrl: '/placeholder.jpg'
+      },
+      {
+        id: 'task-6',
+        title: 'Grand opening announcement',
+        requirement: 'Announcement video for new branch',
+        contentType: 'video',
+        priority: 'high',
+        status: 'approved',
+        assigneeId: '3',
+        createdById: '4',
+        branchSpecific: 'Hyderabad',
+        format: '1920 x 1080 PX',
+        eventBased: 'YES',
+        dueDate: '2025-02-05',
+        thumbnailUrl: '/placeholder.jpg'
+      },
+      {
+        id: 'task-7',
+        title: 'Customer testimonial video',
+        requirement: 'Compile customer testimonials',
+        contentType: 'video',
+        priority: 'medium',
+        status: 'completed',
+        assigneeId: '2',
+        createdById: '3',
+        branchSpecific: 'All Branches',
+        format: '1080 x 1080 PX',
+        eventBased: 'NO',
+        dueDate: '2025-01-30',
         thumbnailUrl: '/placeholder.jpg'
       }
     ];
@@ -129,39 +168,54 @@ export default function TasksPage({ user, onLogout }: TasksPageProps) {
   const stats = {
     pending: tasks.filter(t => t.status === 'draft').length,
     inApproval: tasks.filter(t => t.status === 'in_review').length,
-    openTasks: '2.9M',
-    completed: tasks.filter(t => t.status === 'completed').length
+    open: tasks.filter(t => ['draft', 'in_review'].includes(t.status)).length,
+    completed: tasks.filter(t => t.status === 'approved' || t.status === 'completed').length
   };
 
   const handleCreateTask = (taskData: any) => {
     const newTask: Task = {
       id: `task-${Date.now()}`,
-      title: taskData.title,
-      requirement: taskData.requirement,
-      contentType: taskData.contentType,
-      priority: taskData.priority || 'medium',
+      ...taskData,
       status: 'draft',
-      assigneeId: taskData.assigneeId,
       createdById: user.id,
-      branchSpecific: taskData.branchSpecific,
-      format: taskData.format,
-      eventBased: taskData.eventBased,
-      thumbnailUrl: '/placeholder.jpg'
     };
     
     setTasks(prev => [newTask, ...prev]);
+    toast({
+      title: "Task Created",
+      description: "Your task has been created successfully.",
+    });
   };
 
-  const handleStatusChange = (taskId: string, newStatus: string) => {
+  const handleApprove = (taskId: string) => {
     setTasks(prev => prev.map(task => 
-      task.id === taskId ? { ...task, status: newStatus as any } : task
+      task.id === taskId ? { ...task, status: 'approved' as const } : task
     ));
+    toast({
+      title: "Task Approved",
+      description: "The task has been approved successfully.",
+    });
+  };
+
+  const handleReject = (taskId: string) => {
+    setTasks(prev => prev.map(task => 
+      task.id === taskId ? { ...task, status: 'rejected' as const } : task
+    ));
+    toast({
+      title: "Task Rejected",
+      description: "The task has been rejected.",
+      variant: "destructive",
+    });
   };
 
   const handleSendForApproval = (taskId: string) => {
     setTasks(prev => prev.map(task => 
-      task.id === taskId ? { ...task, status: 'in_review' } : task
+      task.id === taskId ? { ...task, status: 'in_review' as const } : task
     ));
+    toast({
+      title: "Sent for Approval",
+      description: "The task has been sent for approval.",
+    });
   };
 
   const filteredTasks = tasks.filter(task =>
@@ -169,81 +223,190 @@ export default function TasksPage({ user, onLogout }: TasksPageProps) {
     task.requirement.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  const getUserName = (userId: string) => {
+    return users.find(u => u.id === userId)?.name || 'Unknown';
+  };
+
+  const getUserInitials = (userId: string) => {
+    const name = getUserName(userId);
+    return name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+  };
+
+  const priorityColors = {
+    low: 'bg-blue-100 text-blue-800 dark:bg-blue-950 dark:text-blue-300',
+    medium: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-950 dark:text-yellow-300',
+    high: 'bg-orange-100 text-orange-800 dark:bg-orange-950 dark:text-orange-300',
+    urgent: 'bg-red-100 text-red-800 dark:bg-red-950 dark:text-red-300',
+  };
+
+  const statusColors = {
+    draft: 'bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-300',
+    in_review: 'bg-blue-100 text-blue-800 dark:bg-blue-950 dark:text-blue-300',
+    approved: 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300',
+    rejected: 'bg-red-100 text-red-800 dark:bg-red-950 dark:text-red-300',
+    completed: 'bg-green-100 text-green-800 dark:bg-green-950 dark:text-green-300',
+  };
+
   return (
-    <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="border-b border-border bg-card/50 backdrop-blur-sm">
-        <div className="flex items-center justify-between px-6 py-4">
-          <div className="flex items-center space-x-4">
-            <h1 className="text-2xl font-semibold text-green-600" data-testid="text-page-title">
-              Tasks,
-            </h1>
-            <div className="text-sm text-muted-foreground">
-              Hello, {user.name}👋
-            </div>
-          </div>
-          <Button 
-            onClick={onLogout}
-            variant="outline"
-            data-testid="button-logout"
-          >
-            LOGOUT
+    <div className="space-y-6">
+      {/* Header with greeting */}
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-3xl font-bold text-foreground" data-testid="text-page-title">
+            Hello, {user.name.split(' ')[0]} 👋
+          </h1>
+          <p className="text-muted-foreground mt-1">
+            Here's what's happening with your tasks today
+          </p>
+        </div>
+        <div className="flex items-center gap-3">
+          <Button variant="outline" size="icon" data-testid="button-notifications">
+            <Bell className="h-5 w-5" />
+          </Button>
+          <Button onClick={() => setIsNewTaskModalOpen(true)} data-testid="button-create-task">
+            <Plus className="w-4 h-4 mr-2" />
+            Create Task
           </Button>
         </div>
-      </header>
+      </div>
 
-      {/* Main Content */}
-      <main className="p-6">
-        <div className="max-w-7xl mx-auto space-y-6">
-          {/* Controls */}
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <Button 
-                variant="outline" 
-                className="bg-slate-900 text-white border-slate-700"
-              >
-                <Filter className="w-4 h-4 mr-2" />
-                Approvals
-              </Button>
-              <Button 
-                className="bg-yellow-400 hover:bg-yellow-500 text-black"
-                onClick={() => setIsNewTaskModalOpen(true)}
-                data-testid="button-new-task"
-              >
-                <Plus className="w-4 h-4 mr-2" />
-                New task
-              </Button>
-            </div>
-            <div className="relative">
-              <Search className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" />
-              <Input
-                placeholder="Search tasks..."
-                className="pl-10 w-64"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                data-testid="input-search"
-              />
-            </div>
-          </div>
+      {/* Stats Grid */}
+      <StatsGrid
+        pendingCount={stats.pending}
+        inApprovalCount={stats.inApproval}
+        openCount={stats.open}
+        completedCount={stats.completed}
+      />
 
-          {/* Stats Cards */}
-          <TaskStats stats={stats} />
-
-          {/* Table Headers */}
-          <div className="text-sm text-muted-foreground mb-2">
-            Showing {filteredTasks.length} tasks
-          </div>
-
-          {/* Tasks Table */}
-          <TaskTable
-            tasks={filteredTasks}
-            users={users}
-            currentUser={user}
-            onStatusChange={handleStatusChange}
-            onSendForApproval={handleSendForApproval}
+      {/* Filters and Search */}
+      <div className="flex items-center gap-3">
+        <div className="relative flex-1">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          <Input
+            placeholder="Search tasks..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="pl-9"
+            data-testid="input-search"
           />
         </div>
-      </main>
+        <Button variant="outline" data-testid="button-filter">
+          <Filter className="w-4 h-4 mr-2" />
+          Filters
+        </Button>
+      </div>
+
+      {/* Tasks Table */}
+      <div className="border rounded-lg overflow-hidden bg-card">
+        <div className="overflow-x-auto">
+          <table className="w-full">
+            <thead className="border-b bg-muted/50">
+              <tr>
+                <th className="text-left py-3 px-4 text-sm font-medium text-muted-foreground">
+                  Sent By
+                </th>
+                <th className="text-left py-3 px-4 text-sm font-medium text-muted-foreground">
+                  Requirement
+                </th>
+                <th className="text-left py-3 px-4 text-sm font-medium text-muted-foreground">
+                  Branch
+                </th>
+                <th className="text-left py-3 px-4 text-sm font-medium text-muted-foreground">
+                  Type
+                </th>
+                <th className="text-left py-3 px-4 text-sm font-medium text-muted-foreground">
+                  Format
+                </th>
+                <th className="text-left py-3 px-4 text-sm font-medium text-muted-foreground">
+                  Event Based
+                </th>
+                <th className="text-left py-3 px-4 text-sm font-medium text-muted-foreground">
+                  Priority
+                </th>
+                <th className="text-left py-3 px-4 text-sm font-medium text-muted-foreground">
+                  Due Date
+                </th>
+                <th className="text-left py-3 px-4 text-sm font-medium text-muted-foreground">
+                  Status
+                </th>
+                <th className="text-left py-3 px-4 text-sm font-medium text-muted-foreground">
+                  Actions
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredTasks.map((task) => (
+                <tr 
+                  key={task.id}
+                  className="border-b hover-elevate transition-colors"
+                  data-testid={`row-task-${task.id}`}
+                >
+                  <td className="py-3 px-4">
+                    <div className="flex items-center gap-2">
+                      <Avatar className="h-8 w-8">
+                        <AvatarFallback className="text-xs">
+                          {getUserInitials(task.createdById)}
+                        </AvatarFallback>
+                      </Avatar>
+                      <span className="text-sm font-medium">{getUserName(task.createdById)}</span>
+                    </div>
+                  </td>
+                  <td className="py-3 px-4">
+                    <div>
+                      <p className="text-sm font-medium" data-testid={`text-task-title-${task.id}`}>
+                        {task.title}
+                      </p>
+                      <p className="text-xs text-muted-foreground">{task.requirement}</p>
+                    </div>
+                  </td>
+                  <td className="py-3 px-4">
+                    <span className="text-sm">{task.branchSpecific}</span>
+                  </td>
+                  <td className="py-3 px-4">
+                    <Badge variant="outline" className="capitalize">
+                      {task.contentType}
+                    </Badge>
+                  </td>
+                  <td className="py-3 px-4">
+                    <span className="text-xs text-muted-foreground">{task.format}</span>
+                  </td>
+                  <td className="py-3 px-4">
+                    <Badge 
+                      variant={task.eventBased === 'YES' ? 'default' : 'secondary'}
+                      className="text-xs"
+                    >
+                      {task.eventBased}
+                    </Badge>
+                  </td>
+                  <td className="py-3 px-4">
+                    <Badge className={priorityColors[task.priority]}>
+                      {task.priority}
+                    </Badge>
+                  </td>
+                  <td className="py-3 px-4">
+                    <span className="text-sm">{task.dueDate}</span>
+                  </td>
+                  <td className="py-3 px-4">
+                    <Badge className={statusColors[task.status]}>
+                      {task.status.replace('_', ' ')}
+                    </Badge>
+                  </td>
+                  <td className="py-3 px-4">
+                    <TaskActions
+                      taskId={task.id}
+                      status={task.status}
+                      userRole={user.role}
+                      onApprove={handleApprove}
+                      onReject={handleReject}
+                      onSendForApproval={handleSendForApproval}
+                    />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
 
       {/* New Task Modal */}
       <NewTaskModal

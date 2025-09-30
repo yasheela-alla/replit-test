@@ -50,6 +50,21 @@ export const SignInPage: React.FC<SignInPageProps> = ({
                 </GlassInputWrapper>
               </div>
 
+              <div className="animate-element animate-delay-350">
+                <label className="text-sm font-medium text-muted-foreground">Role</label>
+                <GlassInputWrapper>
+                  <select 
+                    name="role" 
+                    className="w-full bg-transparent text-sm p-4 rounded-2xl focus:outline-none text-foreground cursor-pointer"
+                    data-testid="select-role"
+                  >
+                    <option value="manager" className="bg-background">Manager</option>
+                    <option value="creative_team" className="bg-background">Creative Team</option>
+                    <option value="digital_marketer" className="bg-background">Digital Marketing</option>
+                  </select>
+                </GlassInputWrapper>
+              </div>
+
               <div className="animate-element animate-delay-400">
                 <label className="text-sm font-medium text-muted-foreground">Password</label>
                 <GlassInputWrapper>

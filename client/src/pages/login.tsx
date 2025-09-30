@@ -11,28 +11,31 @@ export default function LoginPage({ onLoginSuccess }: LoginPageProps) {
     const formData = new FormData(event.currentTarget);
     const email = formData.get('email') as string;
     const password = formData.get('password') as string;
+    const role = formData.get('role') as 'manager' | 'creative_team' | 'digital_marketer';
 
-    if (!email || !password) {
+    if (!email || !password || !role) {
       alert('Please fill in all fields');
       return;
     }
 
     try {
-      // TODO: Replace with actual API call
       // Simulate authentication with demo users
       const demoUsers = [
-        { id: '1', email: 'manager@company.com', password: 'manager123', name: 'Sarah Johnson', role: 'manager' as const },
-        { id: '2', email: 'creative@company.com', password: 'creative123', name: 'Alex Chen', role: 'creative_team' as const },
-        { id: '3', email: 'marketing@company.com', password: 'marketing123', name: 'Maria Rodriguez', role: 'digital_marketer' as const }
+        { id: '1', email: 'manager@emmadi.com', password: 'admin123', name: 'Sarah Johnson', role: 'manager' as const },
+        { id: '2', email: 'creative@emmadi.com', password: 'creative123', name: 'Alex Chen', role: 'creative_team' as const },
+        { id: '3', email: 'dm@emmadi.com', password: 'marketing123', name: 'Maria Rodriguez', role: 'digital_marketer' as const },
+        { id: '4', email: 'pradeep@emmadi.com', password: 'demo123', name: 'Pradeep Kumar', role: 'creative_team' as const }
       ];
 
-      const user = demoUsers.find(u => u.email === email && u.password === password);
+      const user = demoUsers.find(u => u.email === email && u.password === password && u.role === role);
       
       if (user) {
         console.log('Login successful:', user);
-        onLoginSuccess({ id: user.id, name: user.name, email: user.email, role: user.role });
+        setTimeout(() => {
+          onLoginSuccess({ id: user.id, name: user.name, email: user.email, role: user.role });
+        }, 300);
       } else {
-        alert('Invalid email or password. Try:\n\nManager: manager@company.com / manager123\nCreative: creative@company.com / creative123\nMarketing: marketing@company.com / marketing123');
+        alert('Invalid credentials. Try:\n\nManager: manager@emmadi.com / admin123\nCreative: creative@emmadi.com / creative123\nDigital Marketing: dm@emmadi.com / marketing123');
       }
     } catch (error) {
       console.error('Login error:', error);

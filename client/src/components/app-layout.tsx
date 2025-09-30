@@ -80,20 +80,20 @@ export function AppLayout({ user, onLogout, children }: AppLayoutProps) {
                 <Link
                   key={item.name}
                   href={item.href}
-                  onClick={() => setSidebarOpen(false)}
                 >
-                  <a
+                  <div
                     className={cn(
-                      "flex items-center gap-3 px-3 py-2 rounded-md transition-colors",
+                      "flex items-center gap-3 px-3 py-2 rounded-md transition-colors cursor-pointer",
                       isActive 
                         ? "bg-primary text-primary-foreground" 
                         : "text-muted-foreground hover-elevate"
                     )}
+                    onClick={() => setSidebarOpen(false)}
                     data-testid={`link-${item.name.toLowerCase().replace(' ', '-')}`}
                   >
                     <Icon className="w-5 h-5" />
                     <span className="font-medium">{item.name}</span>
-                  </a>
+                  </div>
                 </Link>
               );
             })}
