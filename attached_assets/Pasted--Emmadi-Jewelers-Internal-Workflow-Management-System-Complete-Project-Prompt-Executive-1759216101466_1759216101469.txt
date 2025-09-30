@@ -1,0 +1,1022 @@
+# 🏆 Emmadi Jewelers Internal Workflow Management System - Complete Project Prompt
+
+## **Executive Summary**
+
+Build a production-ready, enterprise-grade workflow management platform for Emmadi Jewelers' marketing operations. This is an internal tool for creative production, approval workflows, content scheduling, and performance analytics—NOT a public e-commerce site.
+
+---
+
+## **System Architecture**
+
+### **User Roles & Access Levels**
+
+**Manager Role:**
+- Full dashboard access
+- Approve/reject task authority
+- View all content and schedules
+- Access to complete analytics
+- User management capabilities
+
+**Creative Team Role:**
+- Limited dashboard (assigned tasks only)
+- Create and submit tasks
+- Upload assets and revisions
+- View assigned deadlines
+- Limited analytics access
+
+**Digital Marketing Role:**
+- Full dashboard access
+- Create and assign tasks
+- Full content scheduling control
+- Complete analytics access
+- Campaign management
+
+---
+
+## **Page Specifications**
+
+### **1. Authentication & Login Page**
+
+**Layout:**
+- Split-screen design: login form on left (40% width), brand imagery on right (60% width)
+- Centered login form with maximum width constraint
+- Company logo at top
+- Clean, minimal interface
+
+**Features:**
+- Email/password authentication only
+- Role selection dropdown (Manager, Creative Team, DM Team)
+- Remember me checkbox with persistence
+- Password visibility toggle
+- Loading spinner during authentication (minimum duration for smooth UX)
+- Comprehensive error handling with inline validation
+- Success animation before redirect to dashboard
+
+**Form Validation:**
+- Email format verification
+- Password minimum length requirement
+- Empty field validation
+- Real-time error feedback
+
+**Mock User Accounts:**
+- Manager: manager@emmadi.com / admin123
+- Creative: creative@emmadi.com / creative123
+- Digital Marketing: dm@emmadi.com / marketing123
+- Additional team members with varied permissions
+
+**Right Panel:**
+- Hero image of jewelry collection
+- Subtle overlay gradient
+- Company tagline
+- Brand messaging
+
+---
+
+### **2. Dashboard (Home Page)**
+
+**Layout Structure:**
+- Fixed vertical sidebar (always visible, collapsible on mobile)
+- Fixed header with user greeting and controls
+- Main content area with scrollable sections
+
+**Header Components:**
+- Company branding/logo (clickable to dashboard)
+- Dynamic user greeting with name and emoji
+- User avatar with online status indicator
+- Global search with dropdown suggestions
+- Notification bell with unread count badge
+- Settings icon
+- Logout functionality
+
+**Statistics Cards (Top Section):**
+Four cards in horizontal grid displaying:
+
+**Card 1 - Tasks Pending:**
+- Dynamic count from pending tasks
+- Percentage trend vs previous period
+- Clock icon
+- Orange/amber accent color
+- Clickable to filter task view
+
+**Card 2 - In Approval:**
+- Count of tasks awaiting approval
+- Trend indicator
+- Alert circle icon
+- Blue accent
+- Click filters to approval queue
+
+**Card 3 - Open Tasks:**
+- Total open tasks (pending + in progress + in approval)
+- Formatted with K/M notation for large numbers
+- Grid icon
+- Purple accent
+- Percentage growth indicator
+
+**Card 4 - Completed Tasks:**
+- Approved tasks count
+- Success trend percentage
+- Checkmark icon
+- Green/emerald accent
+- Click to view completed work
+
+**Card Design Requirements:**
+- White background with subtle shadow
+- Hover elevation effect
+- Large bold numbers
+- Small descriptive labels
+- Icon in top-right corner (semi-transparent)
+- Growth percentage badge with arrow
+- Rounded corners
+- Smooth hover transitions
+
+**Recent Activity Feed:**
+- Chronological list of last 10 team activities
+- Each entry shows: user avatar, name, action type, task title, timestamp
+- Real-time updates with slide-in animation
+- Scrollable with custom scrollbar
+- Click to open task detail
+- Color-coded by action type
+
+**Quick Actions Panel (Role-Based):**
+
+**For Managers:**
+- Review pending approvals (with count badge)
+- View team performance analytics
+- Check upcoming deadlines
+- Manage team members
+
+**For Creative Team:**
+- Create new task button
+- View my submissions (with count)
+- Access asset library
+- View my deadlines list
+
+**For Digital Marketing:**
+- Launch new campaign
+- View analytics overview
+- Open content calendar
+- Check platform performance
+
+---
+
+### **3. Task Manager (Core Feature)**
+
+**Complete Interface Structure:**
+
+**Top Control Bar:**
+
+**Left Section - View Toggles:**
+- Table view (default)
+- Kanban board view
+- Grid view
+- Calendar view
+- Export button
+
+Active view highlighted with primary color, inactive views use neutral tones.
+
+**Center Section - Filters:**
+- Status dropdown (All, Pending, In Approval, Approved, Rejected)
+- Advanced filters button opening modal with:
+  - Multi-select status
+  - Priority levels
+  - Branch/location selector
+  - Assignee multi-select
+  - Date range picker
+  - Event-based toggle
+- Active filter count badge
+- Clear all filters option
+
+**Right Section:**
+- Create Task button (primary CTA)
+- Bulk actions button (enabled when items selected)
+
+**Statistics Cards (Below Controls):**
+Same four-card layout as dashboard but filtered by current task view/filters.
+
+**Table View Specifications:**
+
+**Columns:**
+- Selection checkbox (bulk select)
+- Sent by (avatar, name, role badge)
+- Requirement (task title with category pill)
+- Branch (location with pin icon)
+- Creative/Video (media type badge)
+- Format (dimensions text)
+- Event Based (YES/NO badge with color coding)
+- Output (thumbnail preview, click to enlarge)
+- Priority (High/Medium/Low with color badges)
+- Due Date (with overdue highlighting)
+- Status (color-coded badge)
+- Actions (role-specific buttons)
+
+**Row Features:**
+- Hover highlight
+- Click to open quick view panel (slide from right)
+- Double-click for full detail modal
+- Right-click context menu
+- Drag to reorder
+- Selectable for bulk operations
+
+**Role-Based Action Buttons:**
+
+**Manager (when task in approval status):**
+- Green circular approve button with checkmark icon
+- Red circular reject button with X icon
+- Three-dot menu for additional options
+- Hover scale effect
+- Loading state during processing
+
+**Creative/DM Team (when task pending):**
+- Gold/yellow "Send for Approval" button
+- Full width in action column
+- Hover state with slight lift
+- Loading spinner on click
+
+**All Roles (always available):**
+- Three-dot menu revealing:
+  - View details
+  - Edit task
+  - Duplicate task
+  - Download assets
+  - View history
+  - Delete (with confirmation)
+
+**Task Status Workflow:**
+- Pending → In Approval (via "Send for Approval")
+- In Approval → Approved (via manager approval)
+- In Approval → Rejected (via manager rejection)
+- Real-time status updates
+- Activity logging for each change
+- Automatic notification to relevant users
+
+**Kanban View:**
+- Four columns: Pending, In Approval, Approved, Rejected
+- Column headers show count
+- Drag-and-drop between columns
+- Auto-save on drop
+- Card design: thumbnail, title, assignee, due date, priority
+- Scrollable columns
+- Add new card button at bottom
+- Column collapse/expand
+
+**Grid View:**
+- Responsive card grid (4 columns desktop, 2 tablet, 1 mobile)
+- Card shows: featured image, title, status badge, assignee avatar, priority indicator, due date
+- Hover overlay with quick actions
+- Click to open detail
+- Masonry layout option
+
+**Calendar View:**
+- Month/week/day toggles
+- Color-coded dots for different task types
+- Click date to see tasks
+- Drag tasks between dates
+- Today highlighted
+- Overdue dates in warning color
+- Multiple tasks per day indicator
+
+**Create Task Modal:**
+
+**Form Fields:**
+- Task title (required, character limits)
+- Category dropdown (required)
+- Branch selector (required)
+- Media type radio buttons (Creative/Video/Both)
+- Format dimensions (width x height inputs)
+- Event based toggle (Yes/No)
+- Priority dropdown (High/Medium/Low)
+- Assignee selector with search
+- Due date picker (cannot be past)
+- Description textarea
+- File upload area (drag-and-drop or click, multiple files, size limits, format restrictions)
+
+**Validation:**
+- Real-time validation
+- Required field indicators
+- Character count displays
+- File size/type checking
+- Date validation
+- Error messages inline
+
+**Post-Submit:**
+- Success toast notification
+- Option to view created task
+- Notification sent to assignee
+- Added to activity feed
+- Modal closes automatically
+
+---
+
+### **4. Social Media Tracker**
+
+**Layout:**
+- Full-width interface
+- Section-based design with clear hierarchy
+
+**Platform Selector (Top):**
+- Horizontal scrollable pill tabs
+- Platforms: YouTube, Instagram, Facebook, Twitter, LinkedIn, All Platforms
+- Each pill shows platform icon and post count
+- Active pill highlighted with primary color
+- Inactive pills with subtle border
+- Smooth transition between selections
+
+**Date Range & Filters:**
+- Date range picker (last 7/30/90 days, custom range)
+- Additional filters: post type, performance tier, campaign
+- Export button
+- Refresh data button
+
+**Metrics Cards (Four-Column Grid):**
+
+**Card 1 - Total Posts:**
+- Large number display
+- Trend percentage vs previous period
+- Document icon
+- Blue-to-purple gradient background
+- Mini sparkline chart at bottom
+
+**Card 2 - Total Reach:**
+- Formatted number (K/M notation)
+- Growth percentage with arrow
+- Users icon
+- Green-to-emerald gradient
+- Reach trend sparkline
+
+**Card 3 - Total Impressions:**
+- Formatted large number
+- Percentage growth
+- Eye icon
+- Orange-to-red gradient
+- Impressions curve sparkline
+
+**Card 4 - Total Engagement:**
+- Engagement count (likes + comments + shares)
+- Engagement rate percentage
+- Heart icon
+- Pink-to-rose gradient
+- Engagement trend sparkline
+
+**Card Design:**
+- Glassmorphism effect with backdrop blur
+- Semi-transparent backgrounds
+- Large icon in top-right (decorative)
+- Number as primary focus
+- Sparkline for trend visualization
+- Hover lift effect
+
+**Performance Chart:**
+- Line chart showing reach, engagement, impressions over time
+- Multiple line series with legend
+- Toggle metrics visibility
+- Grid lines for readability
+- Hover tooltips with exact values
+- X-axis: dates, Y-axis: metric values
+- Zoom and pan capabilities
+- Export chart as image option
+
+**Posts Data Table:**
+
+**Columns:**
+- Post title (truncated with tooltip, clickable)
+- Platform (icon badge with brand colors)
+- Date (formatted, sortable)
+- Reach (formatted number, sortable)
+- Impressions (formatted number, sortable)
+- Engagement (number + rate percentage, visual bar indicator)
+- Type (Carousel/Video/Image/Story badge)
+- Actions (view details, edit, delete)
+
+**Table Features:**
+- Sortable columns (click header)
+- Multi-level sorting (shift+click)
+- Row hover states
+- Alternating row backgrounds for readability
+- Platform icons with authentic brand colors
+- Visual engagement bars
+- High-performing posts highlighted
+- Low-performing posts with warning indicator
+- Pagination or infinite scroll
+
+**Advanced Filtering:**
+- Filter by post type
+- Filter by engagement range (slider)
+- Filter by date range
+- Filter by performance tier
+- Combined filter logic
+- Save filter presets
+
+**Export Options:**
+- Export to CSV
+- Export to PDF report
+- Export to Excel
+- Schedule automated email reports
+- Custom date range for export
+
+---
+
+### **5. Content Planner (Calendar)**
+
+**View Options (Top Bar):**
+- Month view (default)
+- Week view (detailed 7-column)
+- Day view (hour-by-hour)
+- Agenda view (list format)
+- Toggle buttons for quick switching
+
+**Month View Layout:**
+- Full calendar grid with day cells
+- Navigation arrows for previous/next month
+- Month and year display
+- Today button to jump to current date
+- Create new content button (always visible)
+
+**Calendar Features:**
+
+**Drag & Drop Scheduling:**
+- Drag content items from sidebar to calendar
+- Drag between dates to reschedule
+- Visual feedback during drag (ghost element)
+- Confirmation on drop
+- Auto-save scheduling changes
+
+**Color Coding System:**
+- Facebook: brand blue
+- Instagram: gradient pink/orange
+- YouTube: brand red
+- LinkedIn: professional blue
+- Twitter: light blue
+- Multi-platform: mixed color indicator
+
+**Content Items on Calendar:**
+- Platform icon
+- Scheduled time
+- Content title (truncated)
+- Status indicator (scheduled/draft/published/failed)
+- Thumbnail preview (if applicable)
+
+**Hover Preview:**
+- Tooltip showing full details
+- Content preview
+- Engagement stats if published
+- Quick actions
+
+**Click Behavior:**
+- Click content item: Open detail side panel
+- Click empty date cell: Quick add modal
+- Double-click: Full scheduling modal
+
+**Sidebar Filters:**
+- All platforms toggle
+- Individual platform checkboxes
+- Status filters (Scheduled/Draft/Published/Failed)
+- Team member filter
+- Campaign filter
+- Clear all filters
+
+**Schedule Content Modal:**
+
+**Form Fields:**
+- Platform multi-select (can schedule to multiple)
+- Content type selection (Image/Video/Carousel/Story)
+- Post caption textarea with character counter
+- Media upload (drag-and-drop, multiple files)
+- Schedule date picker
+- Time picker (specific time or optimal time suggestion)
+- Link to related task (optional, searchable)
+- Hashtags input (with suggestions)
+- Target audience settings
+- Auto-publish toggle
+
+**Validation:**
+- Platform-specific character limits
+- File type and size restrictions
+- Required fields enforcement
+- Optimal posting time suggestions
+- Hashtag recommendations
+
+**Post Actions:**
+- Save as draft
+- Schedule for publishing
+- Publish immediately
+- Delete scheduled post
+- Edit scheduled content
+- View analytics (for published)
+
+**Week View:**
+- Seven columns for days
+- Hourly time slots
+- Scrollable time range
+- Drag content to specific times
+- Color-coded by platform
+- Compact content cards
+
+**Day View:**
+- Hour-by-hour breakdown
+- All scheduled content for selected day
+- Timeline visualization
+- Empty slots for quick scheduling
+- Platform distribution overview
+
+**Agenda View:**
+- List format sorted by date/time
+- Grouped by day
+- Filter and search capabilities
+- Bulk actions available
+- Quick edit inline
+
+---
+
+## **🎨 Design System Guidelines**
+
+### **Visual Identity:**
+- Professional luxury jewelry brand aesthetic
+- Primary color: Emerald green (sophistication and trust)
+- Accent color: Gold (luxury and premium feel)
+- Clean, spacious layouts with generous whitespace
+- Modern sans-serif typography (Inter or similar)
+- Consistent iconography throughout
+- Subtle animations for polish
+
+### **Component Design Principles:**
+
+**Cards:**
+- White or subtle background colors
+- Subtle shadows (not heavy)
+- Rounded corners for approachability
+- Hover states with elevation increase
+- Clear visual hierarchy
+- Consistent padding
+
+**Buttons:**
+- Clear visual distinction between primary, secondary, ghost
+- Adequate touch target sizes (minimum 44px)
+- Hover states with slight scale or color change
+- Loading states with spinners
+- Disabled states clearly indicated
+- Icon + text combinations where helpful
+
+**Forms:**
+- Clear labels above inputs
+- Placeholder text for guidance
+- Real-time validation feedback
+- Required field indicators
+- Error messages that explain the issue
+- Success states after submission
+- Logical tab order
+
+**Tables:**
+- Clean grid with subtle borders or dividers
+- Header row clearly distinguished
+- Row hover states for interactivity
+- Sortable column indicators
+- Responsive handling (horizontal scroll on mobile)
+- Empty states when no data
+- Loading skeleton screens
+
+**Modals:**
+- Backdrop overlay to focus attention
+- Close button always visible
+- Scrollable content if needed
+- Maximum width for readability
+- Smooth open/close animations
+- Keyboard accessible (ESC to close)
+
+**Navigation:**
+- Clear active state indication
+- Icon + label combinations
+- Logical grouping of related items
+- Collapsible on smaller screens
+- Sticky positioning where appropriate
+
+**Badges & Status Indicators:**
+- Color-coded by meaning (green=success, red=error, yellow=warning, blue=info)
+- Readable text sizes
+- Icons paired with text where helpful
+- Consistent shape and sizing
+
+**Typography Hierarchy:**
+- Clear distinction between headings, subheadings, body text
+- Readable font sizes (minimum 14px for body)
+- Appropriate line heights for readability
+- Consistent font weights
+- Limited font family variations
+
+**Spacing & Layout:**
+- Consistent spacing scale (4px, 8px, 12px, 16px, 24px, 32px, 48px, 64px)
+- Generous padding in interactive elements
+- Clear section separation
+- Grid-based layouts for alignment
+- Responsive breakpoints handled gracefully
+
+**Icons:**
+- Consistent style (outline or solid, not mixed)
+- Appropriate sizing relative to text
+- Meaningful and intuitive
+- Accessible with text alternatives
+
+**Animations & Transitions:**
+- Smooth, purposeful animations (200-300ms duration)
+- Easing functions for natural movement
+- Loading states to indicate processing
+- Skeleton screens for content loading
+- Page transitions for flow
+- Hover/focus animations for feedback
+- No unnecessary decorative animations
+
+---
+
+## **📱 Responsive Design Requirements**
+
+### **Mobile (< 768px):**
+- Hamburger menu for navigation (slide from left)
+- Bottom navigation bar for primary actions
+- Stacked statistics cards (2x2 grid)
+- Task table converted to vertical cards
+- Filters accessible via bottom sheet modal
+- Swipe gestures for quick actions
+- Touch-friendly button sizes (minimum 44px)
+- Single-column layouts
+- Collapsible sections to save space
+- Floating action button for primary CTA
+
+### **Tablet (768px - 1024px):**
+- Collapsed sidebar (icon-only, expand on hover/tap)
+- Statistics cards in 2x2 grid
+- Table simplified to essential columns
+- Filters in horizontal top bar
+- Two-column card layouts where appropriate
+- Touch and mouse interaction support
+
+### **Desktop (> 1024px):**
+- Full sidebar always visible
+- Multi-column layouts utilized
+- Hover interactions enabled
+- Advanced features accessible
+- Full table view with all columns
+- Side panels and modals for details
+- Keyboard shortcuts functional
+
+### **Wide Screens (> 1440px):**
+- Maximum content width constraints for readability
+- Additional columns in grid layouts
+- More data visible without scrolling
+- Enhanced data visualizations
+
+---
+
+## **⚙️ Functional Requirements**
+
+### **Authentication Flow:**
+- Login form validation
+- Role-based access control
+- Session management with persistence
+- Remember me functionality
+- Secure password handling (hashed in production)
+- Logout with confirmation
+- Session timeout handling
+- Redirect to appropriate dashboard based on role
+
+### **Dashboard Functionality:**
+- Real-time statistics calculation
+- Activity feed updates
+- Quick action buttons functional
+- Card click-through to filtered views
+- Responsive chart rendering
+- Data refresh capability
+
+### **Task Manager Operations:**
+
+**Create Task:**
+- Form validation on all fields
+- File upload with progress indicator
+- Multiple file support
+- Assignee notification on creation
+- Activity log entry
+- Success feedback
+
+**Update Task:**
+- Inline editing where appropriate
+- Full edit modal for complex changes
+- Version history tracking
+- Change notifications to stakeholders
+- Optimistic UI updates
+
+**Send for Approval:**
+- Status change to "In Approval"
+- Timestamp recording
+- Manager notification
+- Activity log entry
+- UI update across all views
+
+**Approve Task:**
+- Confirmation dialog
+- Status change to "Approved"
+- Approval timestamp and approver recorded
+- Submitter notification
+- Statistics update
+- Activity log entry
+
+**Reject Task:**
+- Rejection reason modal (required)
+- Status change to "Rejected"
+- Rejection details recorded
+- Submitter notification with reason
+- Statistics update
+- Activity log entry
+
+**Bulk Actions:**
+- Multi-select functionality
+- Bulk approve/reject for managers
+- Bulk status changes
+- Bulk assignment
+- Bulk delete with confirmation
+- Progress indication during processing
+
+**Search Functionality:**
+- Debounced input for performance
+- Search across multiple fields
+- Dropdown results with highlighting
+- Keyboard navigation
+- Recent searches memory
+- Clear search button
+
+**Filtering System:**
+- Multiple simultaneous filters
+- Filter persistence during session
+- Clear individual or all filters
+- Active filter count display
+- Filter presets for common views
+- URL parameter support for shareable filtered views
+
+**Sorting:**
+- Click column headers to sort
+- Toggle ascending/descending
+- Multi-column sorting with shift+click
+- Visual sort indicators
+- Sort persistence
+
+**Export Functionality:**
+- CSV export with all visible columns
+- PDF export with formatting
+- Excel export with multiple sheets
+- Filtered data export
+- Date range selection for export
+- Background processing for large exports
+
+### **Social Media Tracker Operations:**
+
+**Platform Filtering:**
+- Switch between platforms
+- Combined "All Platforms" view
+- Data aggregation across selection
+- URL state management
+
+**Date Range Selection:**
+- Preset ranges (7, 30, 90 days)
+- Custom date picker
+- Compare with previous period
+- Dynamic chart updates
+
+**Analytics Calculations:**
+- Real-time metric aggregation
+- Engagement rate calculations
+- Trend percentage computations
+- Growth indicators
+- Performance tier classifications
+
+**Data Visualization:**
+- Interactive charts with hover details
+- Metric toggle visibility
+- Responsive chart sizing
+- Export chart as image
+- Print-friendly formats
+
+### **Content Planner Operations:**
+
+**Scheduling:**
+- Drag-and-drop to schedule
+- Date/time picker for precise scheduling
+- Multi-platform simultaneous scheduling
+- Recurring content scheduling
+- Optimal time suggestions
+
+**Draft Management:**
+- Save incomplete content as draft
+- Edit drafts before scheduling
+- Duplicate content for reuse
+- Bulk draft actions
+
+**Calendar Interactions:**
+- Navigation between months/weeks/days
+- Quick add by clicking empty slots
+- Edit by clicking scheduled items
+- Reschedule by dragging
+- Delete with confirmation
+
+**Publishing:**
+- Immediate publish option
+- Scheduled auto-publish
+- Publish status tracking
+- Failed publish handling and retry
+- Success/failure notifications
+
+---
+
+## **🔔 Notification System**
+
+### **Notification Types:**
+- Task assigned to you
+- Task approved
+- Task rejected (with reason)
+- Comment on your task
+- Mention in comment
+- Deadline approaching (24 hours)
+- Deadline overdue
+- Bulk action completed
+- Content published successfully
+- Content publish failed
+
+### **Notification Delivery:**
+- In-app notification bell with badge count
+- Dropdown list of recent notifications
+- Mark as read individually
+- Mark all as read
+- Notification detail view
+- Click notification to go to relevant item
+- Notification settings page for preferences
+
+### **Notification Preferences:**
+- Email notifications toggle
+- Push notifications toggle (browser)
+- Per-notification-type settings
+- Frequency settings (immediate, digest)
+- Quiet hours configuration
+
+---
+
+## **💾 Data Management**
+
+### **Data Persistence:**
+- LocalStorage for session data
+- User preferences saved locally
+- Draft auto-save
+- Filter state persistence
+- View mode preferences
+- Recent searches cache
+- Unsaved changes warning
+
+### **Data Structure:**
+- Normalized data models
+- Efficient lookups and filtering
+- Relationship management (tasks, users, comments)
+- Historical data for trends
+- Activity log storage
+
+### **Data Operations:**
+- CRUD operations for all entities
+- Optimistic updates with rollback on error
+- Batch operations support
+- Data validation before save
+- Conflict resolution strategies
+
+---
+
+## **♿ Accessibility Requirements**
+
+- Keyboard navigation throughout
+- Focus indicators visible
+- ARIA labels on interactive elements
+- Screen reader compatibility
+- Semantic HTML structure
+- Adequate color contrast ratios
+- Text alternatives for images
+- Form label associations
+- Error announcements
+- Skip navigation links
+
+---
+
+## **🎯 Performance Optimization**
+
+- Lazy loading for route components
+- Code splitting at route level
+- Image optimization and lazy loading
+- Virtual scrolling for long lists
+- Debounced search and filter inputs
+- Memoization of expensive calculations
+- Efficient re-render prevention
+- Skeleton screens during initial load
+- Progressive enhancement approach
+- Bundle size optimization
+
+---
+
+## **🔐 Security Considerations**
+
+- Role-based access enforcement
+- Input sanitization
+- XSS prevention
+- CSRF protection (when backend integrated)
+- Secure session management
+- Data validation client and server-side
+- File upload restrictions and scanning
+- Rate limiting for actions
+- Audit logging for sensitive operations
+
+---
+
+## **✅ Quality Assurance**
+
+### **Testing Requirements:**
+- Component unit testing
+- Integration testing for workflows
+- User flow testing
+- Cross-browser compatibility
+- Responsive design testing
+- Accessibility testing
+- Performance testing
+- Security testing
+
+### **Error Handling:**
+- Graceful error messages
+- Fallback UI for errors
+- Retry mechanisms where appropriate
+- Error logging for debugging
+- User-friendly error explanations
+- Recovery suggestions
+
+---
+
+## **🚀 Production Readiness**
+
+### **Must-Have Features:**
+- All authentication flows working
+- All role-based permissions enforced
+- Task creation, approval, rejection fully functional
+- Search and filters operational
+- All views (table, kanban, grid, calendar) working
+- Statistics accurately calculated
+- Responsive on all device sizes
+- Data persistence working
+- Notifications functional
+- Export capabilities operational
+- Settings page complete
+- Error handling comprehensive
+- Loading states everywhere appropriate
+
+### **Code Quality:**
+- Clean, readable, maintainable code
+- Consistent naming conventions
+- Proper component organization
+- Reusable custom hooks
+- Documented complex logic
+- No console errors or warnings
+- Optimized performance
+- Type safety where possible
+
+### **User Experience:**
+- Intuitive navigation
+- Clear visual hierarchy
+- Helpful empty states
+- Informative loading states
+- Satisfying animations
+- Responsive feedback to actions
+- Confirmation for destructive actions
+- Undo capability where feasible
+
+---
+
+## **📦 Final Deliverables**
+
+1. Fully functional login/authentication page
+2. Dashboard with real-time statistics and activity feed
+3. Complete Task Manager with all views and role-based actions
+4. Social Media Tracker with analytics and charts
+5. Content Planner with calendar and scheduling
+6. Settings page with profile, notifications, appearance
+7. Responsive design working on mobile, tablet, desktop
+8. All filters, search, bulk actions operational
+9. Notification system functioning
+10. Export capabilities working
+11. Comprehensive error handling
+12. Production-ready code quality
+
+---
+
+## **🎯 Success Criteria**
+
+**The system is successful when:**
+- Any team member can log in with their role and immediately understand the interface
+- Managers can efficiently approve/reject submissions in under 30 seconds per task
+- Creative team can submit work for approval in under 2 minutes
+- Digital marketers can schedule content across platforms in under 3 minutes
+- All statistics update in real-time and accurately reflect current data
+- The system works seamlessly on any device
+- Zero critical bugs or blocking issues
+- Users describe the interface as "intuitive" and "professional"
+- The workflow reduces approval time by at least 50% compared to previous process
+
+---
+
+**BUILD A PRODUCTION-READY SYSTEM WHERE EVERY BUTTON, EVERY FILTER, EVERY FUNCTION WORKS PERFECTLY!**

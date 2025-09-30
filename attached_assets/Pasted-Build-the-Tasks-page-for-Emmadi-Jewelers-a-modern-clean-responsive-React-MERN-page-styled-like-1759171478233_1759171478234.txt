@@ -1,0 +1,19 @@
+Build the Tasks page for Emmadi Jewelers — a modern, clean, responsive React (MERN) page styled like shadcn / 21st.dev (Tailwind-first). Support three roles: manager, creative (employee), digital marketer.
+
+Primary view: top-down vertical task feed (infinite / virtual scroll) with each task card showing: title, content type (image/video/carousel), campaign tag, due date, priority, status (Draft / In Review / Approved / Rejected), assignee, small thumbnail, badges (needs-approval, blocked). Cards expand into a side-drawer with full details, comment thread, asset previews, versions, and action buttons.
+
+Manager actions: Approve (with optional notes), Reject (with required reason), Request changes (creates child task), view approval history (who/when/comment).
+Creative actions: Create task, Upload assets, Send for Approval (opens confirm modal and sets status In Review), Add draft versions, Add comments.
+Digital Marketer actions: Create/assign tasks, bulk-assign tags & schedule, filter by campaign, channel, KPI.
+
+Layout & controls: left filter panel (collapsible) with Campaign, Channel, Status, Assignee, Date-range, Priority, Keyword search; center vertical task list with sticky sort bar; right column (collapsible) showing Calendar preview & quick-add; top nav with role switch / quick new task button. Provide a horizontal-scrolling kanban-ish area to the right for “more columns” (content types, channels) — the main list remains vertical and primary; horizontal scrollbar should appear when columns overflow.
+
+Interactions & UX: drag-to-reorder, keyboard shortcuts (N = new task, F = focus search, A = assign), inline status change (select), thumbnails open lightbox, activity feed in drawer, real-time notifications via web sockets, optimistic UI for actions, undo toast for destructive actions.
+
+Mobile: single-column feed, floating “new task” FAB, swipe actions (left: options; right: mark complete/send for approval).
+
+Accessibility & polish: ARIA labels, high-contrast focus states, screen-reader friendly modals, color tokens for statuses. Use soft shadows, 2xl rounded cards, consistent spacing, micro-animations (0.12s ease- out) for card open/close.
+
+Deliverables: React components (Tailwind + shadcn patterns): TaskList, TaskCard, TaskDrawer, TaskForm, ApprovalControls, FiltersPanel, CalendarPreview, HorizontalColumnsViewport. Provide sample REST endpoints and a sample Task JSON schema. Add unit tests for approval flows and E2E steps for creator → manager approval.
+
+Extras: include version history UI, comment @mentions, attachment preview, campaign KPI quick-link (to Social Media Tracker), and export CSV button for filtered results. Keep styling minimal, elegant, and production-ready.
