@@ -1,5 +1,4 @@
 import { SignInPage } from '@/components/ui/sign-in';
-import heroImage from '@assets/stock_images/abstract_purple_grad_d1c38c4d.jpg';
 
 interface LoginPageProps {
   onLoginSuccess: (user: { id: string; name: string; email: string; role: 'manager' | 'creative_team' | 'digital_marketer'; }) => void;
@@ -52,7 +51,6 @@ export default function LoginPage({ onLoginSuccess }: LoginPageProps) {
     <SignInPage
       title={<span className="font-light text-foreground tracking-tighter">Welcome</span>}
       description="Access your account and continue your journey with us"
-      heroImageSrc={heroImage}
       onSignIn={handleSignIn}
       onResetPassword={handleResetPassword}
     />

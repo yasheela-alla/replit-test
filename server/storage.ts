@@ -157,7 +157,11 @@ export class MemStorage implements IStorage {
 
   async createUser(insertUser: InsertUser): Promise<User> {
     const id = randomUUID();
-    const user: User = { ...insertUser, id };
+    const user: User = { 
+      ...insertUser, 
+      id,
+      role: insertUser.role as 'manager' | 'creative_team' | 'digital_marketer'
+    };
     this.users.set(id, user);
     return user;
   }
@@ -187,9 +191,22 @@ export class MemStorage implements IStorage {
     const id = randomUUID();
     const now = new Date().toISOString();
     const task: Task = {
-      ...taskData,
+      title: taskData.title,
+      requirement: taskData.requirement,
+      contentType: taskData.contentType as 'image' | 'video' | 'carousel' | 'text',
+      priority: (taskData.priority || 'medium') as 'low' | 'medium' | 'high' | 'urgent',
+      campaign: taskData.campaign || null,
+      dueDate: taskData.dueDate || null,
+      assigneeId: taskData.assigneeId || null,
+      branchSpecific: taskData.branchSpecific || null,
+      format: taskData.format || null,
+      eventBased: taskData.eventBased || null,
+      reference: taskData.reference || null,
+      thumbnailUrl: null,
+      tags: taskData.tags || null,
       id,
       status: 'draft',
+      createdById: taskData.createdById,
       createdAt: now,
       updatedAt: now
     };

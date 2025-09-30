@@ -43,6 +43,7 @@ export const SignInPage: React.FC<SignInPageProps> = ({
                   <input 
                     name="email" 
                     type="email" 
+                    autoComplete="email"
                     placeholder="Enter your email address" 
                     className="w-full bg-transparent text-sm p-4 rounded-2xl focus:outline-none text-foreground placeholder:text-muted-foreground" 
                     data-testid="input-email"
@@ -72,6 +73,7 @@ export const SignInPage: React.FC<SignInPageProps> = ({
                     <input 
                       name="password" 
                       type={showPassword ? 'text' : 'password'} 
+                      autoComplete="current-password"
                       placeholder="Enter your password" 
                       className="w-full bg-transparent text-sm p-4 pr-12 rounded-2xl focus:outline-none text-foreground placeholder:text-muted-foreground" 
                       data-testid="input-password"
