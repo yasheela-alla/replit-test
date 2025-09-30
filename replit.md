@@ -1,6 +1,16 @@
 # Overview
 
-This is a task management application for Emmadi Jewelers, built with React, Express, and TypeScript. The application supports role-based authentication with three user types (Manager, Creative Team, Digital Marketer) and provides a comprehensive task management system for jewelry marketing content creation and approval workflows.
+This is a production-ready task management application for Emmadi Jewelers, built with React, Express, and TypeScript. The application features role-based authentication with three user types (Manager, Creative Team, Digital Marketer) and provides a comprehensive task management system for jewelry marketing content creation and approval workflows.
+
+## Recent Updates (Sep 30, 2025)
+- Enhanced login page with role selection dropdown and split-screen design
+- Created production-ready enhanced stats cards with trend indicators and color-coded accents
+- Implemented role-based task actions (approve/reject/send for approval buttons)
+- Built comprehensive task table with all required columns (Sent By, Requirement, Branch, Type, Format, Event Based, Priority, Due Date, Status, Actions)
+- Fixed navigation issues and removed nested anchor tag warnings
+- All components now use proper ESM imports with no compilation errors
+- Added toast notifications for user actions
+- Implemented proper data-testid attributes for testing
 
 # User Preferences
 
@@ -38,16 +48,26 @@ Preferred communication style: Simple, everyday language.
 
 ## Authentication & Authorization
 - **Role-Based Access**: Three distinct user roles with different permissions
-- **Login Flow**: Email/password authentication without social login options
-- **User Management**: Database-driven user authentication with role-specific dashboards
+- **Login Flow**: Email/password authentication with role selection dropdown
+- **Mock Credentials** (Development):
+  - Manager: manager@emmadi.com / admin123
+  - Creative Team: creative@emmadi.com / creative123
+  - Digital Marketer: dm@emmadi.com / marketing123
+- **User Management**: Role-specific dashboards with personalized greetings and action buttons
 
 ## Task Management Features
 - **Content Types**: Support for image, video, carousel, and text content
 - **Workflow States**: Draft, In Review, Approved, Rejected, Completed
-- **Priority Levels**: Low, Medium, High, Urgent
-- **Assignment System**: Task assignment to team members
+- **Priority Levels**: Low, Medium, High, Urgent with color-coded badges
+- **Assignment System**: Task assignment to team members with avatar displays
 - **Campaign Organization**: Tasks grouped by marketing campaigns
-- **Approval Process**: Manager approval with notes and rejection reasons
+- **Approval Process**: Manager approval with approve/reject buttons and toast notifications
+- **Role-Based Actions**: 
+  - Manager: Can approve/reject tasks in review
+  - Creative Team: Can send drafts for approval
+  - Digital Marketer: Can send drafts for approval
+- **Enhanced Statistics**: Dashboard with trend indicators showing pending, in approval, open, and completed tasks
+- **Search & Filter**: Real-time search across task titles and requirements
 
 # External Dependencies
 
