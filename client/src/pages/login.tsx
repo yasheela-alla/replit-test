@@ -2,7 +2,7 @@ import { SignInPage } from '@/components/ui/sign-in';
 import heroImage from '@assets/stock_images/abstract_purple_grad_d1c38c4d.jpg';
 
 interface LoginPageProps {
-  onLoginSuccess: (user: { name: string; email: string; role: 'manager' | 'creative_team' | 'digital_marketer'; }) => void;
+  onLoginSuccess: (user: { id: string; name: string; email: string; role: 'manager' | 'creative_team' | 'digital_marketer'; }) => void;
 }
 
 export default function LoginPage({ onLoginSuccess }: LoginPageProps) {
@@ -21,16 +21,16 @@ export default function LoginPage({ onLoginSuccess }: LoginPageProps) {
       // TODO: Replace with actual API call
       // Simulate authentication with demo users
       const demoUsers = [
-        { email: 'manager@company.com', password: 'manager123', name: 'Sarah Johnson', role: 'manager' },
-        { email: 'creative@company.com', password: 'creative123', name: 'Alex Chen', role: 'creative_team' },
-        { email: 'marketing@company.com', password: 'marketing123', name: 'Maria Rodriguez', role: 'digital_marketer' }
+        { id: '1', email: 'manager@company.com', password: 'manager123', name: 'Sarah Johnson', role: 'manager' as const },
+        { id: '2', email: 'creative@company.com', password: 'creative123', name: 'Alex Chen', role: 'creative_team' as const },
+        { id: '3', email: 'marketing@company.com', password: 'marketing123', name: 'Maria Rodriguez', role: 'digital_marketer' as const }
       ];
 
       const user = demoUsers.find(u => u.email === email && u.password === password);
       
       if (user) {
         console.log('Login successful:', user);
-        onLoginSuccess(user);
+        onLoginSuccess({ id: user.id, name: user.name, email: user.email, role: user.role });
       } else {
         alert('Invalid email or password. Try:\n\nManager: manager@company.com / manager123\nCreative: creative@company.com / creative123\nMarketing: marketing@company.com / marketing123');
       }

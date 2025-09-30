@@ -2,6 +2,7 @@ import TasksPage from './tasks';
 
 interface DashboardPageProps {
   user: {
+    id: string;
     name: string;
     email: string;
     role: 'manager' | 'creative_team' | 'digital_marketer';
